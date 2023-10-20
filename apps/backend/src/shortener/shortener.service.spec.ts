@@ -1,10 +1,10 @@
-import { AppConfigService } from '../config/config.service';
+import { AppConfigService } from '@reduced.to/config';
 import { ShortenerService } from './shortener.service';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppCacheModule } from '../cache/cache.module';
 import { AppCacheService } from '../cache/cache.service';
-import { AppConfigModule } from '../config/config.module';
-import { PrismaService } from '../prisma/prisma.service';
+import { AppConfigModule } from '@reduced.to/config';
+import { PrismaService } from '@reduced.to/prisma';
 import { ShortenerDto } from './dto';
 import { BadRequestException } from '@nestjs/common';
 import { UserContext } from '../auth/interfaces/user-context';
@@ -30,7 +30,7 @@ describe('ShortenerService', () => {
     userId: USER_ID,
     description: null,
     expirationTime: null,
-    createdAt: '2023-05-28T15:16:06.837Z' as any,
+    createdAt: '2023-05-28T15:16:06.837Z',
   };
 
   beforeAll(async () => {

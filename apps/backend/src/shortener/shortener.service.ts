@@ -1,10 +1,10 @@
 import { AppCacheService } from '../cache/cache.service';
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { AppConfigService } from '../config/config.service';
-import { PrismaService } from '../prisma/prisma.service';
+import { AppConfigService } from '@reduced.to/config';
+import { PrismaService } from '@reduced.to/prisma';
 import { ShortenerDto } from './dto';
 import { UserContext } from '../auth/interfaces/user-context';
-import { Url } from '@prisma/client';
+import { Url } from '@reduced.to/prisma';
 import { calculateDateFromTtl } from '../shared/utils';
 
 @Injectable()
@@ -92,7 +92,7 @@ export class ShortenerService {
       if (this.isUrlAlreadyShortened(originalUrl)) {
         throw new Error('The URL is already shortened...');
       }
-    } catch (err: any) {
+    } catch (err) {
       throw new BadRequestException(err.message || 'URL is invalid');
     }
 

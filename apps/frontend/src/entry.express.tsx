@@ -15,26 +15,26 @@ import express from 'express';
 import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
 import { IncomingMessage } from 'node:http';
+import { Http2ServerRequest } from 'node:http2';
 
 declare global {
+  // eslint-disable-next-line
   interface QwikCityPlatform extends PlatformNode {}
 }
 
-// import compression from 'compression';
-
 // Directories where the static assets are located
-const distDir = join(fileURLToPath(import.meta.url), '..', '..', 'dist');
+const distDir = join(fileURLToPath(import.meta.url), '..', '..', 'client');
 const buildDir = join(distDir, 'build');
 
 // Allow for dynamic port
-const PORT = process.env.PORT ?? 5000;
+const PORT = process.env.FRONTEND_APP_PORT ?? 5000;
 
 // Create the Qwik City Node middleware
 const { router, notFound } = createQwikCity({
   render,
   qwikCityPlan,
   manifest,
-  getClientConn: (request: IncomingMessage) => {
+  getClientConn: (request: IncomingMessage | Http2ServerRequest) => {
     // We need to override the default getClientConn function to get the client IP address from the request headers (x-forwarded-for or x-real-ip)
     return {
       ip: (request.headers['x-forwarded-for'] as string) || (request.headers['x-real-ip'] as string) || undefined,

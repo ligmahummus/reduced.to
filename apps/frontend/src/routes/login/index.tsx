@@ -1,5 +1,5 @@
 import { component$ } from '@builder.io/qwik';
-import { Form, globalAction$, Link, RequestHandler, z, zod$ } from '@builder.io/qwik-city';
+import { DocumentHead, Form, globalAction$, Link, RequestHandler, z, zod$ } from '@builder.io/qwik-city';
 import { setTokensAsCookies, validateAccessToken } from '../../shared/auth.service';
 
 export const onGet: RequestHandler = async ({ cookie, redirect }) => {
@@ -71,22 +71,13 @@ export default component$(() => {
                 <label class="label">
                   <span class="label-text text-xs font-semibold">EMAIL</span>
                 </label>
-                <input name="email" type="text" class="input input-bordered w-full max-w-xs focus:outline-0 dark:bg-base-300" />
-                {action.value?.fieldErrors?.email && (
-                  <span class="text-error text-left">{action.value?.fieldErrors?.email}</span>
-                )}{' '}
-                <br />
+                <input name="email" type="text" class="input input-bordered w-full max-w-xs focus:outline-0" />
+                {action.value?.fieldErrors?.email && <span class="text-error text-left">{action.value?.fieldErrors?.email}</span>} <br />
                 <label class="label">
                   <span class="label-text text-xs font-semibold">PASSWORD</span>
                 </label>
-                <input
-                  name="password"
-                  type="password"
-                  class="input input-bordered w-full max-w-xs focus:outline-0 dark:bg-base-300"
-                />{' '}
-                {action.value?.fieldErrors?.password && (
-                  <span class="text-error text-left">{action.value?.fieldErrors?.password}</span>
-                )}
+                <input name="password" type="password" class="input input-bordered w-full max-w-xs focus:outline-0" />{' '}
+                {action.value?.fieldErrors?.password && <span class="text-error text-left">{action.value?.fieldErrors?.password}</span>}
                 <label class="label">
                   <span class="label-text text-xs font-semibold">
                     Need an account?{' '}
@@ -96,7 +87,7 @@ export default component$(() => {
                   </span>
                 </label>
                 <br />
-                <button class={`btn btn-primary ${action.isRunning ? 'loading' : ''}`}>Log In</button>
+                <button class="btn btn-primary">{action.isRunning && <span class="loading loading-spinner-small"></span>}Log In</button>
                 {action.value?.message && <span class="text-error text-left">Invalid email or password</span>}
               </Form>
             </div>
@@ -106,3 +97,45 @@ export default component$(() => {
     </div>
   );
 });
+
+export const head: DocumentHead = {
+  title: 'Reduced.to | Login',
+  meta: [
+    {
+      name: 'title',
+      content: 'Reduced.to | Login',
+    },
+    {
+      name: 'description',
+      content: 'Login to your Reduced.to account to manage your shortened links.',
+    },
+    {
+      property: 'og:type',
+      content: 'website',
+    },
+    {
+      property: 'og:url',
+      content: 'https://reduced.to/login',
+    },
+    {
+      property: 'og:title',
+      content: 'Reduced.to | Login',
+    },
+    {
+      property: 'og:description',
+      content: 'Login to your Reduced.to account to manage your shortened links.',
+    },
+    {
+      property: 'twitter:card',
+      content: 'summary',
+    },
+    {
+      property: 'twitter:title',
+      content: 'Reduced.to | Login',
+    },
+    {
+      property: 'twitter:description',
+      content: 'Login to your Reduced.to account to manage your shortened links.',
+    },
+  ],
+};

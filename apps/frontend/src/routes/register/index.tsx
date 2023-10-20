@@ -1,5 +1,5 @@
 import { component$, useStore } from '@builder.io/qwik';
-import { Form, globalAction$, RequestHandler, z, zod$ } from '@builder.io/qwik-city';
+import { DocumentHead, Form, globalAction$, RequestHandler, z, zod$ } from '@builder.io/qwik-city';
 import { setTokensAsCookies, validateAccessToken } from '../../shared/auth.service';
 
 interface RegisterStore {
@@ -82,14 +82,7 @@ export const useRegister = globalAction$(
 
 export const PasswordVisible = () => {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke-width={1.5}
-      stroke="currentColor"
-      class="w-6 h-6"
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width={1.5} stroke="currentColor" class="w-6 h-6">
       <path
         stroke-linecap="round"
         stroke-linejoin="round"
@@ -101,14 +94,7 @@ export const PasswordVisible = () => {
 
 export const PasswordMasked = () => {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke-width={1.5}
-      stroke="currentColor"
-      class="w-6 h-6"
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width={1.5} stroke="currentColor" class="w-6 h-6">
       <path
         stroke-linecap="round"
         stroke-linejoin="round"
@@ -137,11 +123,7 @@ export default component$(() => {
                 <label class="label">
                   <span class="label-text text-xs font-semibold">DISPLAY NAME</span>
                 </label>
-                <input
-                  name="displayName"
-                  type="text"
-                  class="input input-bordered w-full max-w-xs focus:outline-0 dark:bg-base-300"
-                />
+                <input name="displayName" type="text" class="input input-bordered w-full max-w-xs focus:outline-0" />
                 {action.value?.fieldErrors?.displayName && (
                   <span class="text-error text-left">{action.value?.fieldErrors?.displayName}</span>
                 )}{' '}
@@ -149,11 +131,8 @@ export default component$(() => {
                 <label class="label">
                   <span class="label-text text-xs font-semibold">EMAIL</span>
                 </label>
-                <input name="email" type="text" class="input input-bordered w-full max-w-xs focus:outline-0 dark:bg-base-300" />
-                {action.value?.fieldErrors?.email && (
-                  <span class="text-error text-left">{action.value?.fieldErrors?.email}</span>
-                )}{' '}
-                <br />
+                <input name="email" type="text" class="input input-bordered w-full max-w-xs focus:outline-0" />
+                {action.value?.fieldErrors?.email && <span class="text-error text-left">{action.value?.fieldErrors?.email}</span>} <br />
                 <label class="label">
                   <span class="label-text text-xs font-semibold">PASSWORD</span>
                 </label>
@@ -161,10 +140,9 @@ export default component$(() => {
                   <input
                     name="password"
                     type={store.passwordVisible ? 'text' : 'password'}
-                    class="input input-bordered w-full max-w-xs focus:outline-0 dark:bg-base-300"
+                    class="input input-bordered w-full max-w-xs pr-10 focus:outline-0"
                     autoComplete="on"
                   />
-
                   <span
                     class="absolute right-2.5 cursor-pointer flex items-center"
                     onClick$={() => {
@@ -177,16 +155,12 @@ export default component$(() => {
                   </span>
                 </div>
                 <label class="label">
-                  <span
-                    class={`label-text text-xs text-left ${action.value?.fieldErrors?.password ? 'text-error text-left' : ''}`}
-                  >
+                  <span class={`label-text text-xs text-left ${action.value?.fieldErrors?.password ? 'text-error text-left' : ''}`}>
                     Password must contain at least six characters, including at least 1 letter and 1 number.
                   </span>
                 </label>
                 <br />
-                <button class={`btn btn-primary ${action.isRunning ? ' loading' : ''}`} type="submit">
-                  Continue
-                </button>
+                <button class="btn btn-primary">{action.isRunning && <span class="loading loading-spinner-small"></span>}Register</button>
                 {action.value?.message && <span class="text-error text-left">{action.value.message}</span>}
               </Form>
             </div>
@@ -196,3 +170,45 @@ export default component$(() => {
     </div>
   );
 });
+
+export const head: DocumentHead = {
+  title: 'Reduced.to | Register',
+  meta: [
+    {
+      name: 'title',
+      content: 'Reduced.to | Register',
+    },
+    {
+      name: 'description',
+      content: 'Reduced.to | Create your Reduced.to account to manage your shorten links.',
+    },
+    {
+      property: 'og:type',
+      content: 'website',
+    },
+    {
+      property: 'og:url',
+      content: 'https://reduced.to/register',
+    },
+    {
+      property: 'og:title',
+      content: 'Reduced.to | Register',
+    },
+    {
+      property: 'og:description',
+      content: 'Reduced.to | Create your Reduced.to account to manage your shorten links.',
+    },
+    {
+      property: 'twitter:card',
+      content: 'summary',
+    },
+    {
+      property: 'twitter:title',
+      content: 'Reduced.to | Register',
+    },
+    {
+      property: 'twitter:description',
+      content: 'Reduced.to | Create your Reduced.to account to manage your shorten links.',
+    },
+  ],
+};

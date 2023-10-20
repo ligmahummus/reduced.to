@@ -6,7 +6,7 @@ import {
   ValidationArguments,
 } from 'class-validator';
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../../../prisma/prisma.service';
+import { PrismaService } from '@reduced.to/prisma';
 
 @ValidatorConstraint({ name: 'Unique', async: true })
 @Injectable()
@@ -18,7 +18,7 @@ export class UniqueConstraint implements ValidatorConstraintInterface {
 
     if (!value || !model) return false;
 
-    if (!this.prisma[model]) throw new Error(`Model ${model} is not exist`);
+    if (!this.prisma[model]) throw new Error(`Model ${model} does not exist`);
 
     const record = await (this.prisma[model] as any).findUnique({
       where: {
@@ -30,7 +30,7 @@ export class UniqueConstraint implements ValidatorConstraintInterface {
   }
 
   defaultMessage(args: ValidationArguments) {
-    return `${args.property} is already exists!`;
+    return `${args.property} already exists!`;
   }
 }
 
